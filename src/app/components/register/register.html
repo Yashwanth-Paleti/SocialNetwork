@@ -1,0 +1,62 @@
+<div class="auth-wrapper">
+  <div class="auth-container">
+    <div class="auth-brand">
+      <span class="brand-icon">✦</span>
+      <h1>PixelVerse</h1>
+      <p>Join the community of creators</p>
+    </div>
+
+    <mat-card class="auth-card">
+      <mat-card-header>
+        <mat-card-title>Create Account</mat-card-title>
+        <mat-card-subtitle>Start sharing your world</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Full Name</mat-label>
+          <input matInput [(ngModel)]="name" placeholder="Your name" />
+          <mat-icon matSuffix>person</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput [(ngModel)]="email" type="email" placeholder="your@email.com" />
+          <mat-icon matSuffix>email</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput [(ngModel)]="password" [type]="showPassword ? 'text' : 'password'" placeholder="Min 6 chars" />
+          <mat-icon matSuffix style="cursor:pointer" (click)="showPassword = !showPassword">
+            {{ showPassword ? 'visibility_off' : 'visibility' }}
+          </mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Confirm Password</mat-label>
+          <input matInput [(ngModel)]="confirmPassword" [type]="showPassword ? 'text' : 'password'" placeholder="Re-enter password" />
+          <mat-icon matSuffix>lock</mat-icon>
+        </mat-form-field>
+
+        <div class="password-hints">
+          <small [class.valid]="passwordValid">✓ At least 6 characters</small>
+          <small [class.valid]="hasUppercase">✓ At least 1 uppercase letter</small>
+          <small [class.valid]="hasNumber">✓ At least 1 number</small>
+          <small [class.valid]="passwordsMatch">✓ Passwords match</small>
+        </div>
+
+        <p class="error-msg" *ngIf="errorMessage">{{ errorMessage }}</p>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-raised-button color="primary" class="full-width" (click)="register()" [disabled]="isLoading">
+          {{ isLoading ? 'Creating Account...' : 'Create Account' }}
+        </button>
+        <p class="login-link">
+          Already have an account? <a routerLink="/login">Login here</a>
+        </p>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

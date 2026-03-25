@@ -1,0 +1,43 @@
+<div class="card">
+  <div class="card-header">
+    <img
+      class="avatar"
+      [src]="post.userPhoto || 'https://ui-avatars.com/api/?name=' + post.userName + '&background=7c3aed&color=fff'"
+      alt="avatar"
+    />
+    <div class="user-info">
+      <a class="username" [routerLink]="['/profile', post.userId]">{{ post.userName }}</a>
+      <span class="time">{{ post.createdAt?.toDate ? (post.createdAt.toDate() | date:'mediumDate') : 'Just now' }}</span>
+    </div>
+  </div>
+
+  <div class="image-wrapper">
+    <a [routerLink]="['/post', post.id]">
+      <img class="post-image" [src]="post.imageUrl" [alt]="post.caption" loading="lazy" />
+    </a>
+  </div>
+
+  <div class="card-body">
+    <div class="actions">
+      <button class="action-btn" (click)="toggleLike()">
+        <mat-icon [style.color]="isLiked ? '#f43f5e' : 'rgba(255,255,255,0.5)'">
+          {{ isLiked ? 'favorite' : 'favorite_border' }}
+        </mat-icon>
+        <span>{{ likeCount }}</span>
+      </button>
+
+      <a class="action-btn" [routerLink]="['/post', post.id]">
+        <mat-icon style="color: rgba(255,255,255,0.5)">chat_bubble_outline</mat-icon>
+        <span>{{ commentCount }}</span>
+      </a>
+    </div>
+
+    <p class="caption" *ngIf="post.caption">
+      <strong>{{ post.userName }}</strong> {{ post.caption }}
+    </p>
+
+    <a class="view-comments" [routerLink]="['/post', post.id]" *ngIf="commentCount > 0">
+      View all {{ commentCount }} comments
+    </a>
+  </div>
+</div>

@@ -1,0 +1,77 @@
+<div class="detail-wrapper">
+
+  <div class="loading" *ngIf="isLoading">
+    <div class="skeleton-detail"></div>
+  </div>
+
+  <div class="not-found" *ngIf="!isLoading && !post">
+    <p>😕 Post not found</p>
+  </div>
+
+  <div class="detail-container" *ngIf="!isLoading && post">
+    <!-- Image -->
+    <div class="image-section">
+      <img class="detail-image" [src]="post!.imageUrl" [alt]="post!.caption" />
+    </div>
+
+    <!-- Info Panel -->
+    <div class="info-section">
+      <div class="post-header">
+        <img
+          class="avatar"
+          [src]="post!.userPhoto || 'https://ui-avatars.com/api/?name=' + post!.userName + '&background=7c3aed&color=fff'"
+          alt="avatar"
+        />
+        <div>
+          <a class="username" [routerLink]="['/profile', post!.userId]">{{ post!.userName }}</a>
+          <span class="time">{{ post!.createdAt?.toDate ? (post!.createdAt.toDate() | date:'mediumDate') : 'Just now' }}</span>
+        </div>
+      </div>
+
+      <p class="caption" *ngIf="post!.caption">{{ post!.caption }}</p>
+
+      <div class="actions">
+        <button class="like-btn" (click)="likePost()">
+          <mat-icon [style.color]="isLiked ? '#f43f5e' : 'rgba(255,255,255,0.5)'">
+            {{ isLiked ? 'favorite' : 'favorite_border' }}
+          </mat-icon>
+          <span>{{ likeCount }} likes</span>
+        </button>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Comments List -->
+      <div class="comments-list">
+        <div class="no-comments" *ngIf="!post!.comments || post!.comments.length === 0">
+          <p>No comments yet. Be the first! 💬</p>
+        </div>
+        <div class="comment" *ngFor="let c of post!.comments">
+          <img
+            class="comment-avatar"
+            [src]="c.userPhoto || 'https://ui-avatars.com/api/?name=' + c.userName + '&background=302b63&color=fff'"
+            alt="avatar"
+          />
+          <div class="comment-body">
+            <strong>{{ c.userName }}</strong>
+            <span>{{ c.text }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Add Comment -->
+      <div class="add-comment" *ngIf="currentUser">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Add a comment...</mat-label>
+          <input matInput [(ngModel)]="newComment" (keyup.enter)="addComment()" />
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="addComment()" [disabled]="!newComment.trim()">
+          Post
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,29 @@
+<mat-toolbar>
+  <span class="brand" routerLink="/" style="cursor:pointer">
+    <span class="brand-icon">✦</span> PixelVerse
+  </span>
+  <span class="spacer"></span>
+
+  <ng-container *ngIf="currentUser">
+    <button mat-button routerLink="/">
+      <mat-icon>home</mat-icon> Feed
+    </button>
+    <button mat-button routerLink="/explore">
+      <mat-icon>explore</mat-icon> Explore
+    </button>
+    <button mat-button routerLink="/upload">
+      <mat-icon>add_a_photo</mat-icon> Upload
+    </button>
+    <button mat-button [routerLink]="['/profile', currentUser?.uid]">
+      <mat-icon>person</mat-icon> Profile
+    </button>
+    <button mat-button (click)="logout()">
+      <mat-icon>logout</mat-icon> Logout
+    </button>
+  </ng-container>
+
+  <ng-container *ngIf="!currentUser">
+    <button mat-button routerLink="/login">Login</button>
+    <button mat-raised-button color="primary" routerLink="/register">Sign Up</button>
+  </ng-container>
+</mat-toolbar>

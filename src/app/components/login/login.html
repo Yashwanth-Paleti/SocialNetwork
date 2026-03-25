@@ -1,0 +1,51 @@
+<div class="auth-wrapper">
+  <div class="auth-container">
+    <div class="auth-brand">
+      <span class="brand-icon">✦</span>
+      <h1>PixelVerse</h1>
+      <p>Share your world, one pixel at a time</p>
+    </div>
+
+    <mat-card class="auth-card">
+      <mat-card-header>
+        <mat-card-title>Welcome Back</mat-card-title>
+        <mat-card-subtitle>Login to your account</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput [(ngModel)]="email" type="email" placeholder="Enter your email" />
+          <mat-icon matSuffix>email</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput [(ngModel)]="password" [type]="showPassword ? 'text' : 'password'" placeholder="Enter your password" />
+          <mat-icon matSuffix style="cursor:pointer" (click)="showPassword = !showPassword">
+            {{ showPassword ? 'visibility_off' : 'visibility' }}
+          </mat-icon>
+        </mat-form-field>
+
+        <p class="error-msg" *ngIf="errorMessage">{{ errorMessage }}</p>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-raised-button color="primary" class="full-width" (click)="login()" [disabled]="isLoading">
+          {{ isLoading ? 'Logging in...' : 'Login' }}
+        </button>
+
+        <div class="divider"><span>or</span></div>
+
+        <button mat-stroked-button class="full-width google-btn" (click)="loginWithGoogle()">
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" alt="Google" />
+          Continue with Google
+        </button>
+
+        <p class="register-link">
+          Don't have an account? <a routerLink="/register">Sign up here</a>
+        </p>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

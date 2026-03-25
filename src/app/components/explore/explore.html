@@ -1,0 +1,58 @@
+<div class="explore-wrapper">
+  <div class="explore-container">
+
+    <div class="explore-header">
+      <h2>✦ Explore</h2>
+      <p>Discover photos and people</p>
+    </div>
+
+    <div class="search-bar">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Search posts or people...</mat-label>
+        <input matInput [(ngModel)]="searchQuery" (input)="search()" />
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+
+    <mat-tab-group>
+      <!-- Posts Tab -->
+      <mat-tab label="Posts">
+        <div class="tab-content">
+          <div class="grid" *ngIf="!isLoading && filteredPosts.length > 0">
+            <app-image-card *ngFor="let post of filteredPosts" [post]="post"></app-image-card>
+          </div>
+          <div class="empty-state" *ngIf="!isLoading && filteredPosts.length === 0">
+            <p>😔 No posts found</p>
+          </div>
+          <div class="skeleton-grid" *ngIf="isLoading">
+            <div class="skeleton-item" *ngFor="let i of [1,2,3,4,5,6]"></div>
+          </div>
+        </div>
+      </mat-tab>
+
+      <!-- People Tab -->
+      <mat-tab label="People">
+        <div class="tab-content">
+          <div class="users-list" *ngIf="!isLoading && filteredUsers.length > 0">
+            <div class="user-row" *ngFor="let user of filteredUsers">
+              <img
+                class="user-avatar"
+                [src]="user.photoURL || 'https://ui-avatars.com/api/?name=' + user.displayName + '&background=7c3aed&color=fff'"
+                alt="avatar"
+              />
+              <div class="user-details">
+                <a [routerLink]="['/profile', user.uid]" class="user-name">{{ user.displayName || 'User' }}</a>
+                <span class="user-email">{{ user.email }}</span>
+              </div>
+              <a mat-stroked-button [routerLink]="['/profile', user.uid]" class="view-btn">View</a>
+            </div>
+          </div>
+          <div class="empty-state" *ngIf="!isLoading && filteredUsers.length === 0">
+            <p>😔 No users found</p>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+
+  </div>
+</div>

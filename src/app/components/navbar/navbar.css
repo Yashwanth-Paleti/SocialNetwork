@@ -1,0 +1,31 @@
+.brand {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  background: linear-gradient(135deg, #7c3aed, #06b6d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.brand-icon {
+  font-size: 20px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+button mat-icon {
+  margin-right: 4px;
+  font-size: 18px;
+}
+
+mat-toolbar button {
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-size: 14px;
+}
+
+mat-toolbar button:hover {
+  color: #7c3aed !important;
+}

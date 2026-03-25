@@ -1,0 +1,33 @@
+<div class="feed-wrapper">
+  <div class="feed-container">
+
+    <!-- Loading Skeletons -->
+    <ng-container *ngIf="isLoading">
+      <div class="skeleton-card" *ngFor="let i of [1,2,3]">
+        <div class="skeleton-header">
+          <div class="skeleton-avatar"></div>
+          <div class="skeleton-lines">
+            <div class="skeleton-line short"></div>
+            <div class="skeleton-line xshort"></div>
+          </div>
+        </div>
+        <div class="skeleton-image"></div>
+      </div>
+    </ng-container>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="!isLoading && posts.length === 0">
+      <div class="empty-icon">🌌</div>
+      <h3>Your feed is empty</h3>
+      <p>Follow creators or upload your first photo to get started</p>
+      <a class="upload-btn" routerLink="/upload">Upload a Photo</a>
+    </div>
+
+    <!-- Posts Feed -->
+    <app-image-card
+      *ngFor="let post of posts"
+      [post]="post">
+    </app-image-card>
+
+  </div>
+</div>

@@ -1,0 +1,85 @@
+<div class="profile-wrapper">
+
+  <div class="loading-state" *ngIf="isLoading">
+    <div class="skeleton-profile">
+      <div class="sk-avatar"></div>
+      <div class="sk-lines">
+        <div class="sk-line"></div>
+        <div class="sk-line short"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="not-found" *ngIf="!isLoading && !profileUser">
+    <p>🔍 User not found</p>
+  </div>
+
+  <ng-container *ngIf="!isLoading && profileUser">
+    <!-- Profile Header -->
+    <div class="profile-header">
+      <img
+        class="profile-avatar"
+        [src]="profileUser.photoURL || 'https://ui-avatars.com/api/?name=' + profileUser.displayName + '&background=7c3aed&color=fff&size=120'"
+        alt="avatar"
+      />
+      <div class="profile-info" *ngIf="!isEditing">
+        <h2>{{ profileUser.displayName || 'User' }}</h2>
+        <p class="email">{{ profileUser.email }}</p>
+        <p class="bio">{{ profileUser.bio || 'No bio yet.' }}</p>
+
+        <div class="stats">
+          <div class="stat">
+            <strong>{{ userPosts.length }}</strong>
+            <span>Posts</span>
+          </div>
+          <div class="stat">
+            <strong>{{ followerCount }}</strong>
+            <span>Followers</span>
+          </div>
+          <div class="stat">
+            <strong>{{ followingCount }}</strong>
+            <span>Following</span>
+          </div>
+        </div>
+
+        <div class="profile-actions">
+          <button mat-raised-button color="primary" *ngIf="isOwnProfile" (click)="startEditing()">
+            <mat-icon>edit</mat-icon> Edit Profile
+          </button>
+          <button mat-raised-button [color]="isFollowing ? 'warn' : 'primary'"
+            *ngIf="!isOwnProfile && currentUser" (click)="toggleFollow()">
+            {{ isFollowing ? 'Unfollow' : 'Follow' }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Edit Form -->
+      <div class="edit-form" *ngIf="isEditing">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Display Name</mat-label>
+          <input matInput [(ngModel)]="editName" />
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Bio</mat-label>
+          <textarea matInput [(ngModel)]="editBio" rows="3"></textarea>
+        </mat-form-field>
+        <div class="edit-actions">
+          <button mat-raised-button color="primary" (click)="saveProfile()">Save</button>
+          <button mat-button (click)="isEditing = false">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Posts Grid -->
+    <div class="posts-section">
+      <h3 class="posts-title">📸 Posts ({{ userPosts.length }})</h3>
+      <div class="posts-feed" *ngIf="userPosts.length > 0">
+        <app-image-card *ngFor="let post of userPosts" [post]="post"></app-image-card>
+      </div>
+      <div class="no-posts" *ngIf="userPosts.length === 0">
+        <p>No posts yet.</p>
+      </div>
+    </div>
+  </ng-container>
+
+</div>
